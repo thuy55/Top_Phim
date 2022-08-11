@@ -1,0 +1,76 @@
+﻿<%- include('./partials/header.ejs') %> 
+<%- include('./partials/menu.ejs') %>
+
+<div class="wrap-player">
+    <div class="col-12">
+        <!-- sections -->
+        <%- include('./sections/movie/video.ejs'); %>
+        <section class="">
+            <div class="container">
+                <div class="row">
+                    <div class="fb-comments col-12 commentsdark mt-4"
+                        :data-href="https://www.facebook.com/PhimTop-104228308520263" data-numposts="10"
+                        data-width="100%"></div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="details__title">Có thể bạn thích</h2>
+                    </div>
+                    <% if (movieRelated.length > 0) { %>
+                    <% movieRelated.forEach(mv => { %>
+                    <!-- card -->
+                    <div class="col-6 col-sm-4 col-lg-4 col-xl-3">
+                        <div class="card">
+                            <div class="card__cover">
+                                <img src="<%=mv.movieThumb.thumb%>" alt="<%-mv.title%> " class="rounded" loading="lazy">
+                                <a href="/phim/<%= mv.slug %>" class="card__play">
+                                    <i class="icon ion-ios-play"></i>
+                                </a>
+                            </div>
+                            <div class="card__content">
+                                <h4 class="card__title"><a href="/phim/<%= mv.slug %>"><%= mv.title %> </a></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end card -->
+                    <% }) %>
+                    <% } %>
+
+                </div>
+            </div>
+
+        </section>
+    </div>
+</div>
+<script>
+    let cloneFrom = `<%- movie.cloneFrom %>`
+</script>
+<!-- end sections -->
+<%- include('./partials/footer.ejs'); %>
+<div id="fb-root"></div>
+<script>
+    let resources = `<%-JSON.stringify(movie.resources)%>`;
+    resources = JSON.parse(resources);
+    const load= document.getElementById("loading");
+    const show= ()=>{
+        load.style.display="block";
+    }
+    const hideload= ()=>{
+        load.style.display="none";
+    }
+           show();
+            setTimeout(()=>{
+                $('#iframePlayer').attr('src', resources)
+               hideload();
+            },1300);
+                
+               
+            
+        
+  
+</script>
